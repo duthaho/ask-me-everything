@@ -4023,6 +4023,7 @@ input[type="number"].input-quantity-text {
   border-radius: 3px;
   padding: 6px 10px 6px 8px;
   margin-left: 15px;
+  width: 100%;
 }
 
 .itinerary-overview:before {
