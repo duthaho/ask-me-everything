@@ -6577,7 +6577,7 @@ input[type="number"].input-quantity-text {
   height: 80px;
   z-index: 100;
   top: 50%;
-  left: 50%;
+  left: calc(50% - 40px);
 }
 .lds-hourglass:after {
   content: " ";
