@@ -1,0 +1,12 @@
+.tripcard {
+  display: block;
+  border-radius: 3px;
+  overflow: hidden;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-bottom: 20px; }
+  .tripcard:before {
+    content: '';
+    display: block;
+    padding-top: 50%; }

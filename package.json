@@ -1,0 +1,32 @@
+{
+  "name": "server",
+  "version": "0.0.0",
+  "private": true,
+  "keywords": [
+    "google",
+    "stackoverflow",
+    "ask me anything"
+  ],
+  "author": "duthaho",
+  "scripts": {
+    "start": "nodemon ./bin/www"
+  },
+  "dependencies": {
+    "async": "^3.2.0",
+    "cheerio": "^1.0.0-rc.3",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "express-rate-limit": "^5.1.1",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1",
+    "node-cache": "^5.1.0",
+    "superagent": "^5.2.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  },
+  "engines": {
+    "node": "10.x"
+  }
+}
