@@ -115,7 +115,7 @@ $(document).ready(function () {
       })
         .done(function (res) {
           const { data = [] } = res;
-          if (data.length > 0) {
+          if (data && data.length > 0) {
             const { answer, vote, link } = data[0];
 
             $(".itinerary-overview")
