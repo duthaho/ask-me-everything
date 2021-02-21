@@ -2,6 +2,7 @@ const request = require("superagent");
 const cheerio = require("cheerio");
 const NodeCache = require("node-cache");
 const async = require("async");
+const parser = require("url-parse")
 
 const nc = new NodeCache();
 
@@ -73,17 +74,34 @@ const getLinksWithCache = (payload, cb) => {
 };
 
 const extractLinks = ($, engine) => {
-  const links = [];
+  let links = [];
   if (engine === "google") {
+    $(".yuRUbf a").each(function () {
+      links.push($(this).attr("href"));
+    });
+    $(".kCrYT a").each(function () {
+      links.push($(this).attr("href"));
+    });
     $(".l").each(function () {
+      links.push($(this).attr("href"));
+    });
+    $(".rc a").each(function () {
       links.push($(this).attr("href"));
     });
     $(".r a").each(function () {
       links.push($(this).attr("href"));
     });
   }
+  links = links.map(l => cleanGoogleLink(l)).filter(Boolean);
   return links;
 };
+
+const cleanGoogleLink = (link) => {
+  if (link.includes('/url?')) {
+    const query = parser(link, true).query
+    return query.q || query.url || link
+  }
+}
 
 const getAnswerWithCache = (link, cb) => {
   if (nc.has(link)) return cb(null, nc.get(link));
@@ -99,7 +117,17 @@ const getAnswer = (link, cb) => {
   getAnswerWithCache(link, (err, result) => {
     if (err) return cb(err);
     const $ = cheerio.load(result);
-    const answer = $(".answer .post-text").first().html();
+    const firstAnswer = $(".answercell").first() || $('.answer').first();
+    if (firstAnswer) {
+      let answerBodyCls = '.post-text'
+      if (firstAnswer.find('.js-post-body')) {
+        answerBodyCls = '.js-post-body'
+      }
+      answer = firstAnswer.find(answerBodyCls).text()
+    }
+    if (!answer) {
+      answer = 'no answer given, updating my brain...'
+    }
     const vote = $(".answer .js-vote-count").first().text();
     cb(null, { answer, vote, link });
   });
@@ -109,7 +137,6 @@ const getInstructions = (payload, cb) => {
   getLinksWithCache(payload, (err, questionLinks) => {
     if (err) return cb(err);
     if (!Array.isArray(questionLinks) || questionLinks.length === 0) return cb(null, []);
-
     let numAnswers = payload.n || 1;
     if (numAnswers > questionLinks.length) numAnswers = questionLinks.length;
 

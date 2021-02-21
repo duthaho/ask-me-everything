@@ -21,7 +21,8 @@
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
     "node-cache": "^5.1.0",
-    "superagent": "^5.2.2"
+    "superagent": "^5.2.2",
+    "url-parse": "^1.5.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.3"
